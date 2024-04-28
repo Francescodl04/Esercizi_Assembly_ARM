@@ -1,3 +1,7 @@
+@Francesco Di Lena
+@Primo esercizio laboratorio 2 (modificato con scrittura su standard output) - 23-04-2024
+@Architettura degli elaboratori - A.A. 2023-2024
+
 .data
    addr_n: .word 10		@ Word in memoria con il valore di n 
 .bss
@@ -27,6 +31,7 @@ loop:
      @@@ Parte principale del loop 
      MUL R2, R1, R1
      ADD R0, R0, R2
+     BL print_int
      ADD R1, R1, #1
      @@@ Verifica fine ciclo for: 
      CMP R1, R3
@@ -38,4 +43,4 @@ loop:
    @@@ Parte finale del programma
    
    STR R0, [R5]
-   MOV PC, LR 
+   BL exit_program
