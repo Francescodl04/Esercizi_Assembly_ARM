@@ -1,0 +1,19 @@
+Creazione di un frame
+
+Per la creazione di un frame, si eseguono le seguenti istruzioni:
+
+- Si salva nello stack il contenuto dei registri lr e fp; lr contiene l'indirizzo di ritorno, mentre fp contiene il frame pointer della funzione da cui è partita la chiamata;
+- Il nuovo frame pointer viene impostato al valore attuale dello stack pointer. Con l'istruzione mov si impone fp=sp;
+- Si continua con l'implementazione della funzione: salvataggio nello stack dei rimanenti registri, allocazione variabili, codice della funzione,...
+
+Utilizzo di un frame
+
+- Per accedere ad una word del frame si utilizza un load/store con registro base. Ad esempio: ldr r0, [fp, #-8] per copiare in r0 il contenuto della word all'indirizzo fp-8. In genere, offset positivi servono per accedere ai parametri di input (in quanto inseriti prima della creazione del frame pointer in uno stack descending), mentre offset negativi per accedere a variabili allocate dalla funzione (in quanto inseriti dopo la creazione del frame pointer in uno stack descending).
+
+Cancellazione di un frame
+
+Al termine di una funzione è necessario cancellare il frame corrente e riattivare quello della funzione chiamante.
+
+- Prima della cancellazione dello stack è necessario rimuovere le variabili dinamiche allocate e ripristinare i valori dei registri contenuti nello stack.
+- Si ripristinano i valori iniziali di lr e fp con un pop
+- Si ritorna alla funzione chiamante impostando pc=lr con l'istruzione mov. 

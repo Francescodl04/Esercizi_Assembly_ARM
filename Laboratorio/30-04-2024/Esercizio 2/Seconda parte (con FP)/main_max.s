@@ -1,5 +1,5 @@
 @Francesco Di Lena
-@Secondo esercizio laboratorio 3 - 30-04-2024
+@Secondo esercizio laboratorio 3 - seconda parte (con uso di frame pointer) - 30-04-2024
 @File con il main (da compilare insieme al file find_max.s)
 @Architettura degli elaboratori - A.A. 2023-2024
 
@@ -15,11 +15,12 @@ V: .word -697, 1625, -873, 1375, -158, 1162, -1590, -1971, -345, 260, -956, 1329
 .text
 .global main
 
-main:    
-    PUSH {R0, R1, LR}   @ salva contenuto registri
-    LDR R1, =n          @ carica indirizzo con la dimensione
-    LDR R1, [R1]        @ carica la lunghezza dell'array in r1
-    LDR R0, =V          @ indirizzo del vettore in r0
-    BL find_max         @ chiama la funzione per trovare il massimo
-    POP {R0, R1, LR}    @ recupera valori iniziali dei registri
-    MOV PC, LR          @ esci
+main:
+    LDR R1, =n              @ carica indirizzo con la dimensione
+    LDR R1, [R1]            @ carica la lunghezza dell'array in r1
+    LDR R0, =V              @ indirizzo del vettore in r0
+    PUSH {R0-R1}            @ inserisco nello stack i parametri da passare alla procedura find_max
+    BL find_max             @ chiama la funzione per trovare il massimo
+    POP {R0-R1}             @ recupera valori iniziali dei registri
+    MOV PC, LR              @ ritorno all'esecuzione precedente
+ 
